@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import Link from 'next/link';
 import RecipeCard from '@/components/RecipeCard';
 import { useAuth } from '@/context/AuthContext';
@@ -65,24 +67,54 @@ export default function FavoritesPage() {
   return (
     <main style={{ backgroundColor: '#FAF9F7', minHeight: '100vh', paddingBottom: '4rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2.5rem 1.5rem 0' }}>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: 700, color: '#1E1E1E', letterSpacing: '-0.025em', mb: 0.5 }}
+
+        {/* Tinted header band — same treatment as the catalog */}
+        <Box
+          sx={{
+            background: 'linear-gradient(135deg, #FEF0F7 0%, #FDF5FA 100%)',
+            borderRadius: 3,
+            p: { xs: '1.25rem 1.25rem', sm: '1.75rem 2rem' },
+            mb: 3.5,
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 1.5,
+          }}
         >
-          My Favorites
-        </Typography>
-        <Typography variant="body1" sx={{ color: '#6B6B6B', mb: 3.5 }}>
-          Your saved dessert collection.
-        </Typography>
+          <CakeOutlinedIcon sx={{ fontSize: 28, color: '#E8A4C9', flexShrink: 0, mt: 0.25 }} />
+          <Box>
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: 700, color: '#1E1E1E', letterSpacing: '-0.02em', mb: 0.25 }}
+            >
+              Mis Favoritos
+            </Typography>
+            <Typography variant="body2" sx={{ color: '#6B6B6B' }}>
+              Tu colección de postres guardada.
+            </Typography>
+          </Box>
+        </Box>
 
         {recipes.length === 0 ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <Typography sx={{ fontSize: '2.5rem', mb: 2 }}>🍰</Typography>
+            <Box
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 72,
+                height: 72,
+                borderRadius: '50%',
+                backgroundColor: '#FEF0F7',
+                mb: 2.5,
+              }}
+            >
+              <FavoriteIcon sx={{ fontSize: 32, color: '#E8A4C9' }} />
+            </Box>
             <Typography
               variant="body1"
-              sx={{ color: '#6B6B6B', mb: 3, maxWidth: 360, mx: 'auto' }}
+              sx={{ color: '#6B6B6B', mb: 3, maxWidth: 380, mx: 'auto', lineHeight: 1.6 }}
             >
-              No favorites yet — tap the bookmark on any dessert to save it.
+              Aún no tienes favoritos — toca el corazón para empezar tu colección dulce.
             </Typography>
             <Button
               component={Link}
@@ -92,13 +124,14 @@ export default function FavoritesPage() {
                 backgroundColor: '#E8A4C9',
                 color: '#fff',
                 fontWeight: 600,
-                borderRadius: 3,
-                px: 3,
+                borderRadius: 50,
+                px: 3.5,
+                py: 1,
                 boxShadow: 'none',
                 '&:hover': { backgroundColor: '#D48DB0', boxShadow: 'none' },
               }}
             >
-              Browse recipes
+              Ver recetas
             </Button>
           </Box>
         ) : (

@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import CakeOutlinedIcon from '@mui/icons-material/CakeOutlined';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -38,21 +39,27 @@ export default function Navbar() {
           minHeight: { xs: 56, sm: 60 },
         }}
       >
-        {/* Brand */}
-        <Typography
+        {/* Brand — cake icon + name */}
+        <Box
           component={Link}
           href="/"
-          variant="h6"
           sx={{
             flexGrow: 1,
-            fontWeight: 700,
-            letterSpacing: '-0.02em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.75,
             textDecoration: 'none',
             color: '#1E1E1E',
           }}
         >
-          Dessert Recipes
-        </Typography>
+          <CakeOutlinedIcon sx={{ fontSize: 22, color: '#E8A4C9', flexShrink: 0 }} />
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1 }}
+          >
+           Riwi's Bakery
+          </Typography>
+        </Box>
 
         {/* Render nothing auth-related while hydrating to avoid flicker */}
         {!loading && (

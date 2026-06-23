@@ -12,9 +12,7 @@ declare global {
   var mongooseCache: MongooseCache | undefined;
 }
 
-// Next.js hot reloads create fresh module instances in dev, which would open a
-// new connection on every reload and exhaust the MongoDB connection pool.
-// Caching on the Node.js global object persists across hot reloads.
+
 let cached: MongooseCache = global.mongooseCache ?? { conn: null, promise: null };
 global.mongooseCache = cached;
 

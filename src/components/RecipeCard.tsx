@@ -7,8 +7,8 @@ import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,7 @@ type Props = {
   image: string;
   prepTimeMinutes: number;
   difficulty: Difficulty;
-  /** Seed value for the bookmark. The /favorites page passes true; the catalog
+  /** Seed value for the heart. The /favorites page passes true; the catalog
    *  omits it and relies on the AuthContext favoritedIds Set instead. */
   initialFavorited?: boolean;
   /** Called after a successful toggle so parents (e.g. /favorites) can update
@@ -48,25 +48,30 @@ export default function RecipeCard({
   const { user, favoritedIds, addFavoriteId, removeFavoriteId } = useAuth();
   const chip = difficultyChip[difficulty];
 
-  // Initialise from the context Set (populated after auth) or the prop.
+  // Seed from the context Set (populated after auth) or the prop.
   // Catalog cards rely on the Set; /favorites cards pass initialFavorited={true}.
   const [favorited, setFavorited] = useState(() => favoritedIds.has(id) || initialFavorited);
 
-  // Sync whenever the context Set updates (e.g. after the async favorites load
-  // on mount — the Set starts empty and fills in once /api/favorites responds).
+  // Sync when the context Set updates (e.g. after the async favorites load on mount).
   useEffect(() => {
     setFavorited(favoritedIds.has(id) || initialFavorited);
   }, [favoritedIds, id, initialFavorited]);
 
-  async function handleBookmark(e: React.MouseEvent) {
+  // Incrementing this key remounts the icon wrapper, which restarts the CSS
+  // animation — ensures the pop plays on every click even in quick succession.
+  const [animKey, setAnimKey] = useState(0);
+
+  async function handleHeart(e: React.MouseEvent) {
     e.stopPropagation();
     e.preventDefault();
 
     if (!user) {
-      // Favorites require authentication — send the guest to login.
+      // Favorites require authentication — redirect rather than silently failing.
       router.push('/login');
       return;
     }
+
+    setAnimKey((k) => k + 1); // restart the pop animation
 
     // Optimistic UI: flip the icon immediately so the tap feels instant.
     // On API failure we revert to the previous state.
@@ -82,8 +87,8 @@ export default function RecipeCard({
       });
       if (!res.ok) throw new Error('Request failed');
 
-      // Keep the context Set in sync so every other RecipeCard on the page
-      // (e.g. catalog) reflects the change without a full reload.
+      // Keep the context Set in sync so other RecipeCards on the page
+      // reflect the change without a full reload.
       if (next) addFavoriteId(id);
       else removeFavoriteId(id);
 
@@ -105,11 +110,11 @@ export default function RecipeCard({
         transition: 'transform 0.18s ease, box-shadow 0.18s ease',
         '&:hover': {
           transform: 'translateY(-4px)',
-          boxShadow: '0 10px 28px rgba(0,0,0,0.12)',
+          boxShadow: '0 10px 28px rgba(232, 164, 201, 0.18)',
         },
       }}
     >
-      {/* Entire card is a link; the bookmark button breaks out via stopPropagation */}
+      {/* Entire card is a link; the heart button breaks out via stopPropagation */}
       <Link
         href={`/recipes/${id}`}
         style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, textDecoration: 'none', color: 'inherit' }}
@@ -136,13 +141,17 @@ export default function RecipeCard({
             <Chip
               label={difficulty}
               size="small"
+              
               sx={{
                 backgroundColor: chip.bg,
                 color: chip.color,
                 fontWeight: 600,
                 fontSize: '0.72rem',
-                height: 20,
-                borderRadius: '5px',
+                height: '20px',
+                borderRadius: '999px',
+                px: 0.25,
+                 
+
               }}
             />
             <Typography variant="caption" sx={{ color: '#6B6B6B', fontSize: '0.8rem' }}>
@@ -152,26 +161,40 @@ export default function RecipeCard({
         </CardContent>
       </Link>
 
+      {/* Heart button — iOS-style floating pill */}
       <IconButton
         size="small"
-        onClick={handleBookmark}
+        onClick={handleHeart}
         aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
         sx={{
           position: 'absolute',
-          top: 8,
-          right: 8,
-          width: 32,
-          height: 32,
-          backgroundColor: 'rgba(255, 255, 255, 0.82)',
-          backdropFilter: 'blur(6px)',
-          '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.96)' },
+          top: 12,
+          right: 12,
+          width: 34,
+          height: 34,
+          backgroundColor: 'rgba(255, 255, 255, 0.88)',
+          backdropFilter: 'blur(1px)',
+          borderRadius: '50%',
+          boxShadow: '0 1px 6px rgba(0,0,0,0.10)',
+          '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.98)' },
+          marginRight: 1,
+          
         }}
       >
-        {favorited ? (
-          <BookmarkIcon sx={{ fontSize: 17, color: '#E8A4C9' }} />
-        ) : (
-          <BookmarkBorderIcon sx={{ fontSize: 17, color: '#1E1E1E' }} />
-        )}
+        {/* key change forces DOM remount → CSS animation restarts on every click */}
+        <span
+          key={animKey}
+          style={{
+            display: 'inline-flex',
+            animation: animKey > 0 ? 'heart-pop 0.22s ease' : 'none',
+          }}
+        >
+          {favorited ? (
+            <FavoriteIcon sx={{ fontSize: 13, color: '#E8A4C9' }} />
+          ) : (
+            <FavoriteBorderIcon sx={{ fontSize: 13, color: '#9E9E9E' }} />
+          )}
+        </span>
       </IconButton>
     </Card>
   );

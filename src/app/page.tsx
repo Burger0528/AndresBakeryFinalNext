@@ -13,26 +13,49 @@ export default async function CatalogPage() {
           padding: '2.5rem 1.5rem 0',
         }}
       >
-        <h1
+        {/* Tinted header band — soft pink block that anchors the page identity */}
+        <div
           style={{
-            fontWeight: 700,
-            fontSize: 'clamp(1.6rem, 4vw, 2.25rem)',
-            color: '#1E1E1E',
-            letterSpacing: '-0.025em',
-            marginBottom: '0.3rem',
-          }}
-        >
-          Sweet Treats
-        </h1>
-        <p
-          style={{
-            color: '#6B6B6B',
-            fontSize: '1rem',
+            background: 'linear-gradient(135deg, #FEF0F7 0%, #FDF5FA 100%)',
+            borderRadius: '20px',
+            padding: '1.75rem 2rem',
             marginBottom: '2.25rem',
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: '1rem',
           }}
         >
-          Handpicked dessert recipes to satisfy every craving.
-        </p>
+          <span
+            style={{ fontSize: '2rem', lineHeight: 1, flexShrink: 0, marginTop: '2px' }}
+            aria-hidden="true"
+          >
+          </span>
+          <div>
+            <h1
+              style={{
+                fontFamily: 'var(--font-quicksand), system-ui, sans-serif',
+                fontWeight: 700,
+                fontSize: 'clamp(1.6rem, 4vw, 2.1rem)',
+                color: '#1E1E1E',
+                letterSpacing: '-0.02em',
+                marginBottom: '0.35rem',
+                lineHeight: 1.15,
+              }}
+            >
+              Sweet Desserts
+            </h1>
+            <p
+              style={{
+                fontFamily: 'var(--font-nunito), system-ui, sans-serif',
+                color: '#6B6B6B',
+                fontSize: '0.9375rem',
+                lineHeight: 1.5,
+              }}
+            >
+              Made whith love by Riwi's Bakery. 
+            </p>
+          </div>
+        </div>
 
         {recipes.length === 0 ? (
           <p style={{ color: '#6B6B6B', fontSize: '1rem' }}>

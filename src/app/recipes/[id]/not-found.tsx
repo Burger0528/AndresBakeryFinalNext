@@ -13,7 +13,7 @@ export default function RecipeNotFound() {
       }}
     >
       <div style={{ textAlign: 'center', maxWidth: '360px' }}>
-        <p style={{ fontSize: '3rem', marginBottom: '1rem' }}>🍰</p>
+        <p style={{ fontSize: '3rem', marginBottom: '1rem' }}></p>
         <h1
           style={{
             fontWeight: 700,

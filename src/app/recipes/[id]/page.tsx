@@ -13,6 +13,9 @@ const difficultyColors: Record<Difficulty, { bg: string; color: string }> = {
   Hard:   { bg: '#FFDDE1', color: '#842029' },
 };
 
+const HEADING_FONT = 'var(--font-quicksand), system-ui, sans-serif';
+const BODY_FONT    = 'var(--font-nunito), system-ui, sans-serif';
+
 export default async function RecipeDetailPage({ params }: Props) {
   const { id } = await params;
   const recipe = await getRecipeById(id);
@@ -22,7 +25,7 @@ export default async function RecipeDetailPage({ params }: Props) {
   const chip = difficultyColors[recipe.difficulty];
 
   return (
-    <main style={{ backgroundColor: '#FAF9F7', minHeight: '100vh', paddingBottom: '4rem' }}>
+    <main style={{ backgroundColor: 'rgb(250, 247, 250)', minHeight: '100vh', paddingBottom: '4rem', fontFamily: BODY_FONT }}>
       <div style={{ maxWidth: '780px', margin: '0 auto', padding: '1.75rem 1.5rem 0' }}>
 
         {/* Back link */}
@@ -34,6 +37,7 @@ export default async function RecipeDetailPage({ params }: Props) {
             gap: '0.35rem',
             color: '#6B6B6B',
             fontSize: '0.875rem',
+            fontFamily: BODY_FONT,
             fontWeight: 500,
             marginBottom: '1.5rem',
             textDecoration: 'none',
@@ -47,10 +51,10 @@ export default async function RecipeDetailPage({ params }: Props) {
           style={{
             position: 'relative',
             paddingTop: '56%',
-            borderRadius: '18px',
+            borderRadius: '20px',
             overflow: 'hidden',
-            marginBottom: '2rem',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.09)',
+            marginBottom: '1.5rem',
+            boxShadow: '0 4px 24px rgba(232, 164, 201, 0.15)',
           }}
         >
           <Image
@@ -63,54 +67,65 @@ export default async function RecipeDetailPage({ params }: Props) {
           />
         </div>
 
-        {/* Title */}
-        <h1
-          style={{
-            fontWeight: 700,
-            fontSize: 'clamp(1.5rem, 5vw, 2rem)',
-            color: '#1E1E1E',
-            letterSpacing: '-0.025em',
-            marginBottom: '0.85rem',
-            lineHeight: 1.2,
-          }}
-        >
-          {recipe.name}
-        </h1>
-
-        {/* Metadata row */}
+        {/* Tinted title + metadata block — lighter echo of the catalog header band */}
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem',
-            flexWrap: 'wrap',
-            marginBottom: '1.5rem',
+            background: 'linear-gradient(135deg, #FEF0F7 0%, #FDF5FA 100%)',
+            borderRadius: '16px',
+            padding: '1.25rem 1.5rem 1.25rem',
+            marginBottom: '1.75rem',
           }}
         >
-          <span
+          <h1
             style={{
-              backgroundColor: chip.bg,
-              color: chip.color,
-              padding: '3px 11px',
-              borderRadius: '7px',
-              fontSize: '0.78rem',
-              fontWeight: 600,
-              letterSpacing: '0.01em',
+              fontFamily: HEADING_FONT,
+              fontWeight: 700,
+              fontSize: 'clamp(1.4rem, 5vw, 1.875rem)',
+              color: '#1E1E1E',
+              letterSpacing: '-0.02em',
+              marginBottom: '0.75rem',
+              lineHeight: 1.2,
             }}
           >
-            {recipe.difficulty}
-          </span>
-          <span style={{ color: '#6B6B6B', fontSize: '0.875rem' }}>
-            ⏱&nbsp;{recipe.prepTimeMinutes} min
-          </span>
-          <span style={{ color: '#6B6B6B', fontSize: '0.875rem' }}>
-            🍽&nbsp;{recipe.servings} servings
-          </span>
+            {recipe.name}
+          </h1>
+
+          {/* Metadata row */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              flexWrap: 'wrap',
+            }}
+          >
+            <span
+              style={{
+                backgroundColor: chip.bg,
+                color: chip.color,
+                padding: '3px 12px',
+                borderRadius: '999px',
+                fontSize: '0.78rem',
+                fontFamily: BODY_FONT,
+                fontWeight: 600,
+                letterSpacing: '0.01em',
+              }}
+            >
+              {recipe.difficulty}
+            </span>
+            <span style={{ color: '#6B6B6B', fontSize: '0.875rem', fontFamily: BODY_FONT }}>
+              ⏱&nbsp;{recipe.prepTimeMinutes} min
+            </span>
+            <span style={{ color: '#6B6B6B', fontSize: '0.875rem', fontFamily: BODY_FONT }}>
+              🍽&nbsp;{recipe.servings} porciones
+            </span>
+          </div>
         </div>
 
         {/* Description */}
         <p
           style={{
+            fontFamily: BODY_FONT,
             color: '#3D3D3D',
             fontSize: '1rem',
             lineHeight: 1.7,
@@ -120,20 +135,21 @@ export default async function RecipeDetailPage({ params }: Props) {
           {recipe.description}
         </p>
 
-        <hr style={{ border: 'none', borderTop: '1px solid rgba(0,0,0,0.07)', marginBottom: '2rem' }} />
+        <hr style={{ border: 'none', borderTop: '1px solid rgba(232, 164, 201, 0.25)', marginBottom: '2rem' }} />
 
         {/* Ingredients */}
         <section style={{ marginBottom: '2.5rem' }}>
           <h2
             style={{
+              fontFamily: HEADING_FONT,
               fontWeight: 700,
               fontSize: '1.2rem',
               color: '#1E1E1E',
-              letterSpacing: '-0.015em',
+              letterSpacing: '-0.01em',
               marginBottom: '1rem',
             }}
           >
-            Ingredients
+            Ingredientes
           </h2>
           <ul
             style={{
@@ -153,6 +169,7 @@ export default async function RecipeDetailPage({ params }: Props) {
                   alignItems: 'flex-start',
                   gap: '0.6rem',
                   color: '#3D3D3D',
+                  fontFamily: BODY_FONT,
                   fontSize: '0.9375rem',
                   lineHeight: 1.5,
                 }}
@@ -168,14 +185,15 @@ export default async function RecipeDetailPage({ params }: Props) {
         <section>
           <h2
             style={{
+              fontFamily: HEADING_FONT,
               fontWeight: 700,
               fontSize: '1.2rem',
               color: '#1E1E1E',
-              letterSpacing: '-0.015em',
+              letterSpacing: '-0.01em',
               marginBottom: '1.25rem',
             }}
           >
-            Steps
+            Preparación
           </h2>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {recipe.steps.map((step, i) => (
@@ -195,12 +213,13 @@ export default async function RecipeDetailPage({ params }: Props) {
                     width: 28,
                     height: 28,
                     borderRadius: '50%',
-                    backgroundColor: '#E8A4C9',
+                    background: 'linear-gradient(135deg, #E8A4C9, #D48DB0)',
                     color: '#fff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontSize: '0.75rem',
+                    fontFamily: HEADING_FONT,
                     fontWeight: 700,
                     marginTop: '2px',
                   }}
@@ -211,6 +230,7 @@ export default async function RecipeDetailPage({ params }: Props) {
                   style={{
                     margin: 0,
                     color: '#3D3D3D',
+                    fontFamily: BODY_FONT,
                     fontSize: '0.9375rem',
                     lineHeight: 1.65,
                   }}

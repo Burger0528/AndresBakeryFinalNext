@@ -47,7 +47,7 @@ export const recipesData: RecipeSeed[] = [
     slug: 'arroz-con-leche-canela',
     sourceImage:
       'https://res.cloudinary.com/dh3cfhtgj/image/upload/v1782216905/instant-pot-arroz-con-leche_d0fwl5.jpg',
-    name: 'Arroz con Leche Cremoso de Canela',
+    name: 'Arroz con Leche Cremoso',
     prepTimeMinutes: 50,
     difficulty: 'Easy',
     servings: 6,
@@ -74,7 +74,7 @@ export const recipesData: RecipeSeed[] = [
     slug: 'mousse-lulo-chocolate-blanco',
     sourceImage:
       'https://res.cloudinary.com/dh3cfhtgj/image/upload/v1782216893/hq720_vkpian.jpg',
-    name: 'Mousse de Lulo y Chocolate Blanco',
+    name: 'Mousse de Lulo y Chocolate',
     prepTimeMinutes: 35,
     difficulty: 'Medium',
     servings: 6,
@@ -101,7 +101,7 @@ export const recipesData: RecipeSeed[] = [
     slug: 'tarta-limon-merengue-suizo',
     sourceImage:
       'https://res.cloudinary.com/dh3cfhtgj/image/upload/v1782216929/tarta-de-limon-con-leche-condensada_eyu740.jpg',
-    name: 'Tarta de Limón con Merengue Suizo',
+    name: 'Tarta de Limón ',
     prepTimeMinutes: 70,
     difficulty: 'Medium',
     servings: 8,
@@ -158,7 +158,7 @@ export const recipesData: RecipeSeed[] = [
     slug: 'souffle-chocolate-individual',
     sourceImage:
       'https://res.cloudinary.com/dh3cfhtgj/image/upload/v1782216959/257193-chef-johns-chocolate-souffle-DDMFS-beauty-4x3-57-0af04de9f4154f44b0d927dab4d2e624_yg0fcs.jpg',
-    name: 'Soufflé de Chocolate Individual',
+    name: 'Soufflé de Chocolate ',
     prepTimeMinutes: 30,
     difficulty: 'Hard',
     servings: 4,
